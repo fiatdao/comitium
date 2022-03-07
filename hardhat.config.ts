@@ -14,14 +14,33 @@ task('deploy', 'Deploys the Comitium Diamond with all of its facets')
     .addParam('days', 'The number of days the rewards should run')
     .addParam('rewardsAmount', 'The reward amount')
     .setAction(async (args) => {
-        const deployComitium = require('./scripts/deploy');
-        await deployComitium(
+        const { deploy } = require('./scripts/deploy');
+        await deploy(
             args.fdt,
             args.cv,
             args.start,
             args.days,
             args.rewardsAmount);
     });
+
+task('deploy-rewards', 'Deploys the Comitium Diamond with all of its facets')
+    .addParam('diamond', 'The Diamond contract address')
+    .addParam('fdt', 'The FDT token address')
+    .addParam('cv', 'The community vault address')
+    .addParam('start', 'The Start timestamp of the rewards')
+    .addParam('end', 'The End timestamp of the rewards')
+    .addParam('rewardsAmount', 'The reward amount')
+    .setAction(async (args) => {
+        const { deployRewards } = require('./scripts/deploy');
+        await deployRewards(
+            args.diamond,
+            args.fdt,
+            args.cv,
+            args.start,
+            args.end,
+            args.rewardsAmount);
+    });
+
 
 // Some of the settings should be defined in `./config.js`.
 // Go to https://hardhat.org/config/ for the syntax.
