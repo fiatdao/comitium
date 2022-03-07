@@ -120,4 +120,38 @@ async function deploy(fdt: string, cv: string, sStart: string, sDays: string, re
     console.log('Rewards address:', rewards.address);
 }
 
-module.exports = deploy;
+async function deployRewards(diamond: string, fdt: string, cv: string, sStart: string, sEnd: string, rewardsAmount: string) {
+    const end = Number.parseInt(sEnd);
+    const start = Number.parseInt(sStart)
+
+    await hardhat.run('compile');
+    const deployers = await hardhat.ethers.getSigners();
+    const deployerAddress = await deployers[0].getAddress();
+
+    /**
+     * Deploying Rewards
+     */
+    console.log('Deploying Rewards...');
+    const rewards = (await deployer.deployContract('Rewards', [deployerAddress, fdt, diamond])) as Rewards;
+    console.log(`Rewards deployed at: ${rewards.address}`);
+
+    await rewards.deployTransaction.wait(5);
+
+    console.log('Setup Rewards...');
+    await rewards.setupPullToken(cv, start, end, rewardsAmount);
+    console.log(`Rewards have been set up. Go ahead and approve ${rewardsAmount} from the Community Vault`);
+
+    /**
+     * Verify Contracts
+     */
+    console.log('Verifying Rewards on Etherscan...');
+    await hardhat.run('verify:verify', {
+        address: rewards.address,
+        constructorArguments: [deployerAddress, fdt, diamond]
+    });
+
+    console.log(`Finished Deployment!`);
+    console.log('Rewards address:', rewards.address);
+}
+
+module.exports = { deploy, deployRewards }

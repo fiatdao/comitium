@@ -186,6 +186,7 @@ ComitiumFacet deployed at: 0x6cc9FC46d8436Ac5302D1145258344a3CfBaE559
 -----
 Comitium deployed at: 0x4645d1cF3f4cE59b06008642E74E60e8F80c8b58
 Rewards deployed at: 0x2458Fd408F5D2c61a4819E9d6DB43A81011E42a7
+Rewards Extension deployed at: 0x314d7df34b72e485a5c5fdfaeff7ded6335b3a6e
 ```
 
 ### Rinkeby
@@ -198,6 +199,7 @@ ComitiumFacet deployed at: 0x16B843a0EcBe562444261B1cDAF061e6913c30Bf
 -----
 Comitium deployed at: 0x893210b51C2489E7F9Db36C4B0C5d791A9E0C580
 Rewards deployed at: 0x37518094FC8208f71C6eD11082c5B86cE22689B8
+Rewards Extension deployed at: 0x05d1361Df5c5241F778A2f2a49Eab96ef201B254
 ```
 
 ## Discussion
