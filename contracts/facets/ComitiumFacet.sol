@@ -14,6 +14,8 @@ contract ComitiumFacet {
     uint256 constant public MAX_LOCK = 365 days;
     uint256 constant BASE_MULTIPLIER = 1e18;
 
+    IRewards constant rewardsOld = IRewards(0x2458Fd408F5D2c61a4819E9d6DB43A81011E42a7);
+
     event Deposit(address indexed user, uint256 amount, uint256 newBalance);
     event Withdraw(address indexed user, uint256 amountWithdrew, uint256 amountLeft);
     event Lock(address indexed user, uint256 timestamp);
@@ -45,6 +47,10 @@ contract ComitiumFacet {
 
         // this must be called before the user's balance is updated so the rewards contract can calculate
         // the amount owed correctly
+        if (ds.firstRegisterUserAction[msg.sender] == false) {
+            rewardsOld.registerUserAction(msg.sender);
+            ds.firstRegisterUserAction[msg.sender] = true;
+        }
         if (address(ds.rewards) != address(0)) {
             ds.rewards.registerUserAction(msg.sender);
         }
@@ -77,6 +83,10 @@ contract ComitiumFacet {
 
         // this must be called before the user's balance is updated so the rewards contract can calculate
         // the amount owed correctly
+        if (ds.firstRegisterUserAction[msg.sender] == false) {
+            rewardsOld.registerUserAction(msg.sender);
+            ds.firstRegisterUserAction[msg.sender] = true;
+        }
         if (address(ds.rewards) != address(0)) {
             ds.rewards.registerUserAction(msg.sender);
         }

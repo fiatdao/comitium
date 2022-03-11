@@ -37,6 +37,8 @@ library LibComitiumStorage {
 
         IERC20 fdt;
         IRewards rewards;
+
+        mapping(address => bool) firstRegisterUserAction;
     }
 
     function comitiumStorage() internal pure returns (Storage storage ds) {
