@@ -219,6 +219,14 @@ contract ComitiumFacet {
         return ownVotingPower.add(delegatedVotingPower);
     }
 
+    function queryVotePower(address user, uint256 blockNumber, bytes calldata) external returns (uint256) {
+        uint256 blocksAgo = block.number.sub(blockNumber);
+
+        uint256 timestamp = block.timestamp.sub(blocksAgo.mul(13)); // Avg. block time = 13s
+
+        return votingPowerAtTs(user, timestamp);
+    }
+
     // fdtStaked returns the total raw amount of FDT staked at the current block
     function fdtStaked() public view returns (uint256) {
         return fdtStakedAtTs(block.timestamp);
